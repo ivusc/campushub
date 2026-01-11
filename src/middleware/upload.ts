@@ -3,7 +3,10 @@ import path from 'path';
 import fs from 'fs';
 import { type Request } from 'express';
 
-const uploadDir = './public/uploads';
+const uploadDir = process.env.RENDER_DISK_PATH 
+    ? '/opt/render/project/src/public/uploads' 
+    : './public/uploads';
+
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }

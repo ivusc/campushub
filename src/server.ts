@@ -60,13 +60,12 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-
-
 //ROUTES
 app.use('/', authRouter);
 app.use('/', postRouter);
 app.use('/', indexRouter);
 
+//MONGODB
 mongoose
   .connect(MONGODB_URI)
   .then(() => console.log("✅ Connected to MongoDB."))
