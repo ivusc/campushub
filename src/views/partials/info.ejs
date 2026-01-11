@@ -1,0 +1,25 @@
+<div id="toast-info" class="fixed top-5 right-5 z-50 flex items-center w-full max-w-xs p-4 bg-blue-300 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out" role="alert">
+    <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-gray-800">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <span class="sr-only">Info icon</span>
+    </div>
+    
+    <div class="ml-3 text-sm font-medium text-gray-800">
+        <%= typeof infoMessage !== 'undefined' ? infoMessage : 'Information!' %>
+    </div>
+
+    <button type="button" class="ml-auto  text-gray-700 hover:text-gray-900 rounded-lg  p-1.5 inline-flex h-8 w-8" onclick="closeToast()" aria-label="Close">
+        <span class="sr-only">Dismiss</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+</div>
+
+<script>
+    function closeToast() {
+        const toast = document.getElementById('toast-info');
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 500);
+    }
+    // Auto-hide after 5 seconds
+    setTimeout(closeToast, 5000);
+</script>

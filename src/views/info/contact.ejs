@@ -1,0 +1,37 @@
+<head>
+  <%- include('../partials/header') %>
+</head>
+<%- include('../partials/navbar') %>
+<main class="max-w-2xl mx-auto min-h-[80vh] px-4 py-16">
+    <div class="text-center mb-10">
+        <h1 class="text-4xl font-extrabold text-gray-900">Get in Touch</h1>
+        <p class="mt-4 text-gray-600">Have questions about this project? Drop us a message.</p>
+    </div>
+
+    <% if (typeof success !== 'undefined') { %>
+        <div class="mb-6 p-4 bg-green-50 text-green-700 border-l-4 border-green-500 rounded">
+            <%= success %>
+        </div>
+    <% } %>
+
+    <form action="/contact" method="POST" class="bg-white p-8 rounded-2xl space-y-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" name="name" required class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" required class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Message</label>
+            <textarea name="message" rows="4" required class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+        </div>
+        <div class="flex items-center justify-center">
+          <button type="submit" class="py-3 px-4 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors">
+              Send Message
+          </button>
+        </div>
+    </form>
+</main>
+<%- include('../partials/footer') %>

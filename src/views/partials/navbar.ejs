@@ -1,0 +1,67 @@
+<nav class="<%= currentPath === '/' ? 'bg-indigo-700 text-white' : 'bg-gray-50 text-gray-900' %> sticky top-0">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+        <div class="shrink-0 flex items-center">
+          <a href="/">
+            <span class="text-2xl font-bold select-none <%= currentPath === '/' ? 'text-white' : 'text-indigo-700' %>">CampusHub</span>
+          </a>
+        </div>
+        <% if (currentPath !== '/') { %>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a href="/about" class="<%= currentPath === '/about' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' %> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition">
+              About
+            </a>
+            <a href="/posts" class="<%= currentPath === '/posts' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' %> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition">
+              Posts
+            </a>
+          </div>
+        <% } else { %>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a href="/about" class="<%= currentPath === '/about' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-white hover:border-gray-50 hover:text-gray-200' %> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition">
+              About
+            </a>
+            <a href="/posts" class="<%= currentPath === '/posts' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-white hover:border-gray-50 hover:text-gray-200' %> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition">
+              Posts
+            </a>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
+        <% if (user) { %>
+          <% if (currentPath === '/') { %>
+            <a href="/dashboard" class="text-sm font-medium hover:underline hover:text-gray-100 underline-offset-2">
+              <span class="font-medium">Hi, <%= user.username %></span>
+            </a>
+          <% } else { %>
+            <a href="/dashboard" class="text-sm font-medium hover:underline hover:text-gray-700 underline-offset-2">
+              <span class="font-medium">Hi, <%= user.username %></span>
+            </a>
+          <% } %>
+          <form action="/logout" method="POST">
+            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition">Logout</a>
+          </form>
+        <% } else { %>
+          <% if (currentPath === '/') { %>
+           <a href="/register" class="text-sm font-medium hover:underline text-white hover:text-gray-100 underline-offset-2">Register</a>
+          <% } else { %>
+            <a href="/register" class="text-sm font-medium hover:underline hover:text-indigo-700 underline-offset-2">Register</a>
+          <% } %>
+          <a href="/login" class="bg-indigo-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-500 text-white transition">
+            Login
+          </a>
+        <% } %>
+      </div>
+
+      <div class="-mr-2 flex items-center sm:hidden">
+        <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

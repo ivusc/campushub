@@ -1,0 +1,44 @@
+{
+  "name": "campushub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon",
+    "tailwind": "npx @tailwindcss/cli -i public/css/global.css -o public/css/style.css --watch",
+    "seed": "npx tsx src/seed.ts",
+    "build": "tsc && cpx \"src/views/**/*\" \"dist/views\"",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@faker-js/faker": "^10.2.0",
+    "@tailwindcss/cli": "^4.1.18",
+    "bcrypt": "^6.0.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "mongoose": "^9.1.2",
+    "multer": "^2.0.2",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/connect-flash": "^0.0.40",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.18.2",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^25.0.3",
+    "cpx": "^1.5.0",
+    "nodemon": "^3.1.11",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
