@@ -11,6 +11,6 @@ interface IUser {
 
 declare module "express-session" {
   interface SessionData {
-    user: IUser;
+    user: IUser | null;
   }
 }
