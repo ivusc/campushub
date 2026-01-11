@@ -4,6 +4,7 @@ import { type Request, type Response } from "express";
 import path from "path";
 import fs from 'fs/promises';
 import { fileURLToPath } from "url";
+import { v2 as cloudinary } from 'cloudinary';
 
 export async function getPosts(req: Request, res: Response) {
   try {
@@ -21,10 +22,11 @@ export async function createPost(req: Request, res: Response) {
   console.log(title, content, tags, isPublic);
 
   //FILE
-  let filePath = '';
-  if (req.file) {
-    filePath = `/uploads/${req.file.filename}`;
-  }
+  // let filePath = '';
+  // if (req.file) {
+  //   filePath = `/uploads/${req.file.filename}`;
+  // }
+  const imageUrl = req.file ? req.file.path : '';
 
   //AUTHOR
   const author = req.session.user!.userId;
@@ -43,7 +45,7 @@ export async function createPost(req: Request, res: Response) {
       author: new mongoose.Types.ObjectId(req.session.user!.userId),
       isPublic: isPublic === 'true',
       tags: tagsArray,
-      fileLinks: filePath ? [filePath] : []
+      fileLinks: imageUrl ? [imageUrl] : []
     });
     await newPost.save();
 
@@ -64,15 +66,15 @@ export async function updatePost(req: Request, res: Response) {
   }
 
   //FILE
-  let filePath = '';
+  let imageUrl = '';
   if (req.file) {
     console.log('deleting file')
     if (post.fileLinks.length > 0 && post.fileLinks[0]){
-      await deleteFile(post.fileLinks[0])
+      await deleteFromCloudinary(post.fileLinks[0])
     }
-    filePath = `/uploads/${req.file.filename}`;
+    imageUrl = req.file ? req.file.path : '';
   } else {
-    filePath = post.fileLinks[0] || '';
+    imageUrl = post.fileLinks[0] || '';
   }
 
   try {
@@ -83,7 +85,7 @@ export async function updatePost(req: Request, res: Response) {
         content, 
         tags, 
         isPublic: isPublic === 'true',
-        fileLinks: filePath ? [filePath] : []
+        fileLinks: imageUrl ? [imageUrl] : []
       },
       { new: true }
     );
@@ -118,15 +120,31 @@ export async function deletePost(req: Request, res: Response) {
   }
 }
 
-async function deleteFile(relativePath: string){
-  try{
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const absolutePath = path.join(__dirname,'../../public', relativePath);
+//DELETE FROM FS STORAGE
+// async function deleteFile(relativePath: string){
+//   try{
+//     const __filename = fileURLToPath(import.meta.url);
+//     const __dirname = path.dirname(__filename);
+//     const absolutePath = path.join(__dirname,'../../public', relativePath);
 
-    await fs.unlink(absolutePath);
-    console.log(`Successfully deleted: ${absolutePath}`);
-  } catch (err:any) {
-    console.warn(`File deletion skipped: ${err.message}`);
+//     await fs.unlink(absolutePath);
+//     console.log(`Successfully deleted: ${absolutePath}`);
+//   } catch (err:any) {
+//     console.warn(`File deletion skipped: ${err.message}`);
+//   }
+// }
+
+//DELETE FROM CLOUDINARY
+const deleteFromCloudinary = async (imageUrl: string) => {
+  try {
+    // Extract public_id from the URL
+    const parts = imageUrl.split('/');
+    const fileName = parts[parts.length - 1];
+    const publicId = `campushub_uploads/${fileName?.split('.')[0]}`;
+    
+    await cloudinary.uploader.destroy(publicId);
+    console.log("Cloudinary image deleted:", publicId);
+  } catch (err) {
+    console.error("Cloudinary deletion failed:", err);
   }
-}
+};

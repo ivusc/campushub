@@ -2,17 +2,19 @@ services:
   - type: web
     name: campushub-app
     env: node
-    plan: free 
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: npm run start
-    disk:
-      name: uploads-data
-      mountPath: /opt/render/project/src/public/uploads
-      sizeGB: 1
     envVars:
-      - key: NODE_VERSION
-        value: 18.0.0
-      - key: MONGODB_URI
-        sync: false # Set this in the Render Dashboard
-      - key: SESSION_SECRET
-        generateValue: true
+    - key: NODE_VERSION
+      value: 18.0.0
+    - key: MONGODB_URI
+      sync: false
+    - key: SESSION_SECRET
+      generateValue: true
+    - key: CLOUDINARY_CLOUD_NAME
+      sync: false
+    - key: CLOUDINARY_API_KEY
+      sync: false
+    - key: CLOUDINARY_API_SECRET
+      sync: false
