@@ -21,6 +21,10 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/campushub";
 
+if (!MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined in environment variables");
+}
+
 //SESSIONS
 const sessionOptions = {
   name: 'campushub_session',
@@ -28,7 +32,7 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
   //@ts-ignore
-  store: MongoStore.default.create({
+  store: MongoStore.create({
     mongoUrl: MONGODB_URI,
     ttl: 14 * 24 * 7 * 60 * 60, //14 days
     autoRemove: 'native', //Automatically removes expired sessions,
