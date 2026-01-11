@@ -7,7 +7,7 @@
     "dev": "nodemon",
     "tailwind": "npx @tailwindcss/cli -i public/css/global.css -o public/css/style.css --watch",
     "seed": "npx tsx src/seed.ts",
-    "build": "tsc && cp -r views dist/",
+    "build": "tsc && cp -r src/views dist/",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
