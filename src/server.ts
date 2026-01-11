@@ -27,7 +27,8 @@ const sessionOptions = {
   secret: process.env.SESSION_SECRET || 'secretkey12345',
   resave: false,
   saveUninitialized: false,
-  store: new MongoStore({
+  //@ts-ignore
+  store: MongoStore.default.create({
     mongoUrl: MONGODB_URI,
     ttl: 14 * 24 * 7 * 60 * 60, //14 days
     autoRemove: 'native', //Automatically removes expired sessions,
